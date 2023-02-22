@@ -1,6 +1,7 @@
 package io.github.xuenqui.customer.resources.repositories
 
 import io.github.xuenqui.customer.domain.Customer
+import io.github.xuenqui.customer.domain.CustomerRepository
 import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.data.repository.CrudRepository
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Repository
 
 @Component
 class CustomerSql(
-    private val repository: CustomerRepository
-) {
+    private val repository: CustomerRepositoryJpa
+) : CustomerRepository {
 
-    fun save(customer: Customer): Customer {
+    override fun save(customer: Customer): Customer {
         val entity = CustomerEntity(
             id = UUID.randomUUID().toString(),
             name = customer.name,
@@ -25,11 +26,11 @@ class CustomerSql(
         repository.save(entity)
 
         return customer.copy(
-            id = customer.id,
-            createdAt = customer.createdAt
+            id = entity.id,
+            createdAt = entity.createdAt
         )
     }
 }
 
 @Repository
-interface CustomerRepository : CrudRepository<CustomerEntity, String>
+interface CustomerRepositoryJpa : CrudRepository<CustomerEntity, String>
