@@ -4,9 +4,12 @@ import io.github.xuenqui.customer.domain.Customer
 import io.github.xuenqui.customer.domain.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -23,6 +26,24 @@ class CustomerController(
         val response = service.createCustomer(domain).toResponse()
 
         return ResponseEntity(response, HttpStatus.CREATED)
+    }
+
+    @GetMapping("/{id}")
+    fun find(
+        @PathVariable("id") id: String
+    ): ResponseEntity<CustomerResponse> {
+
+        val response = service.findById(id).toResponse()
+        return ResponseEntity(response, HttpStatus.OK)
+    }
+
+    @GetMapping
+    fun findByDocumentNumber(
+        @RequestParam("document_number") documentNumber: String
+    ): ResponseEntity<CustomerResponse> {
+
+        val response = service.findByDocumentNumber(documentNumber).toResponse()
+        return ResponseEntity(response, HttpStatus.OK)
     }
 }
 
