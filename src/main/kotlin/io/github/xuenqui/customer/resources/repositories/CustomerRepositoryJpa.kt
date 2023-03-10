@@ -1,5 +1,6 @@
 package io.github.xuenqui.customer.resources.repositories
 
+import io.github.xuenqui.customer.application.exceptions.DatabaseException
 import io.github.xuenqui.customer.domain.Customer
 import io.github.xuenqui.customer.domain.CustomerRepository
 import java.time.LocalDateTime
@@ -14,23 +15,27 @@ class CustomerSql(
     private val repository: CustomerRepositoryJpa
 ) : CustomerRepository {
 
-    override fun save(customer: Customer): Customer {
-        val entity = CustomerEntity(
-            id = UUID.randomUUID().toString(),
-            name = customer.name,
-            documentNumber = customer.documentNumber,
-            email = customer.email,
-            cellphone = customer.cellphone,
-            createdAt = LocalDateTime.now()
-        )
+    override fun save(customer: Customer): Customer =
+        try {
+            val entity = CustomerEntity(
+                id = UUID.randomUUID().toString(),
+                name = customer.name,
+                documentNumber = customer.documentNumber,
+                email = customer.email,
+                cellphone = customer.cellphone,
+                createdAt = LocalDateTime.now()
+            )
 
-        repository.save(entity)
+            repository.save(entity)
 
-        return customer.copy(
-            id = entity.id,
-            createdAt = entity.createdAt
-        )
-    }
+            customer.copy(
+                id = entity.id,
+                createdAt = entity.createdAt
+            )
+        } catch (e: Exception) {
+            throw DatabaseException("Error to create a new customer.", e)
+        }
+
 
     override fun findById(id: String): Customer? {
         val result = repository.findById(id)
