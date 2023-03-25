@@ -17,13 +17,26 @@ repositories {
 }
 
 dependencies {
+	// ACTUATOR
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// WEB
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
+	// KOTLIN
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	// SECURITY
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+	// DATABASE
 	runtimeOnly("com.h2database:h2")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// TESTS
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
