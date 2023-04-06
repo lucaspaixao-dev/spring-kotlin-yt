@@ -2,7 +2,7 @@ package io.github.xuenqui.customer.resources.repositories
 
 import io.github.xuenqui.customer.application.exceptions.DatabaseException
 import io.github.xuenqui.customer.domain.Customer
-import io.github.xuenqui.customer.domain.CustomerRepository
+import io.github.xuenqui.customer.domain.repositories.CustomerRepository
 import java.time.LocalDateTime
 import java.util.Optional
 import java.util.UUID

@@ -1,4 +1,6 @@
-package io.github.xuenqui.customer.domain
+package io.github.xuenqui.customer.domain.repositories
+
+import io.github.xuenqui.customer.domain.Customer
 
 interface CustomerRepository {
     fun save(customer: Customer): Customer

@@ -1,7 +1,7 @@
 package io.github.xuenqui.customer.application
 
 import io.github.xuenqui.customer.domain.Customer
-import io.github.xuenqui.customer.domain.CustomerService
+import io.github.xuenqui.customer.domain.services.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,47 +19,37 @@ class CustomerController(
 ) {
 
     @PostMapping
-    fun post(
-        @RequestBody request: CustomerRequest
-    ): ResponseEntity<CustomerResponse> {
-        val domain = request.toDomain()
-        val response = service.createCustomer(domain).toResponse()
-
+    fun post(@RequestBody request: CustomerRequest): ResponseEntity<CustomerResponse> {
+        val response = service.createCustomer(request.toDomain()).toResponse()
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
     @GetMapping("/{id}")
-    fun find(
-        @PathVariable("id") id: String
-    ): ResponseEntity<CustomerResponse> {
-
+    fun find(@PathVariable("id") id: String): ResponseEntity<CustomerResponse> {
         val response = service.findById(id).toResponse()
         return ResponseEntity(response, HttpStatus.OK)
     }
 
     @GetMapping
-    fun findByDocumentNumber(
-        @RequestParam("document_number") documentNumber: String
-    ): ResponseEntity<CustomerResponse> {
-
+    fun findByDocumentNumber(@RequestParam("document_number") documentNumber: String): ResponseEntity<CustomerResponse> {
         val response = service.findByDocumentNumber(documentNumber).toResponse()
         return ResponseEntity(response, HttpStatus.OK)
     }
 }
 
 fun CustomerRequest.toDomain() = Customer(
-    name = this.name,
-    email = this.email,
-    cellphone = this.cellphone,
-    documentNumber = this.documentNumber
+    name = name,
+    email = email,
+    cellphone = cellphone,
+    documentNumber = documentNumber
 )
 
 fun Customer.toResponse() = CustomerResponse(
-    id = this.id!!,
-    name = this.name,
-    email = this.email,
-    cellphone = this.cellphone,
-    documentNumber = this.documentNumber,
-    createdAt = this.createdAt!!,
-    updatedAt = this.updatedAt
+    id = id!!,
+    name = name,
+    email = email,
+    cellphone = cellphone,
+    documentNumber = documentNumber,
+    createdAt = createdAt!!,
+    updatedAt = updatedAt
 )
