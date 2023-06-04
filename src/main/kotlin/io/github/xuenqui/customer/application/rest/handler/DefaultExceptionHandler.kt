@@ -1,6 +1,7 @@
-package io.github.xuenqui.customer.application.handler
+package io.github.xuenqui.customer.application.rest.handler
 
-import io.github.xuenqui.customer.application.exceptions.ApiException
+import io.github.xuenqui.customer.application.rest.response.ErrorResponse
+import io.github.xuenqui.customer.domain.ApplicationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -10,9 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 class DefaultExceptionHandler : ResponseEntityExceptionHandler() {
 
-    @ExceptionHandler(ApiException::class)
-    fun handleApiException(apiException: ApiException): ResponseEntity<ErrorResponse> {
-        return createErrorResponse(apiException.status, apiException.message, apiException.details)
+    @ExceptionHandler(ApplicationException::class)
+    fun handleApiException(applicationException: ApplicationException): ResponseEntity<ErrorResponse> {
+        return createErrorResponse(
+            HttpStatus.valueOf(applicationException.status),
+            applicationException.message,
+            applicationException.details
+        )
     }
 
     @ExceptionHandler(Exception::class)
@@ -34,9 +39,3 @@ class DefaultExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(errorResponse, status)
     }
 }
-
-data class ErrorResponse(
-    val errorCode: String,
-    val message: String,
-    val details: Map<String, String>? = null
-)

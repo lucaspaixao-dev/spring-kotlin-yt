@@ -1,16 +1,13 @@
-package io.github.xuenqui.customer.application
+package io.github.xuenqui.customer.application.rest.controller
 
-import io.github.xuenqui.customer.domain.Customer
-import io.github.xuenqui.customer.domain.services.CustomerService
+import io.github.xuenqui.customer.application.rest.request.CustomerRequest
+import io.github.xuenqui.customer.application.rest.request.toDomain
+import io.github.xuenqui.customer.application.rest.response.CustomerResponse
+import io.github.xuenqui.customer.application.rest.response.toResponse
+import io.github.xuenqui.customer.domain.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/customers")
@@ -36,20 +33,3 @@ class CustomerController(
         return ResponseEntity(response, HttpStatus.OK)
     }
 }
-
-fun CustomerRequest.toDomain() = Customer(
-    name = name,
-    email = email,
-    cellphone = cellphone,
-    documentNumber = documentNumber
-)
-
-fun Customer.toResponse() = CustomerResponse(
-    id = id!!,
-    name = name,
-    email = email,
-    cellphone = cellphone,
-    documentNumber = documentNumber,
-    createdAt = createdAt!!,
-    updatedAt = updatedAt
-)

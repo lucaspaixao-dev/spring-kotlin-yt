@@ -1,8 +1,8 @@
-package io.github.xuenqui.customer.domain.producers
+package io.github.xuenqui.customer.domain.message
 
 import io.github.xuenqui.customer.domain.Customer
 
-interface CustomerProducer {
+interface CustomerMessage {
 
     fun produce(customer: Customer)
 }

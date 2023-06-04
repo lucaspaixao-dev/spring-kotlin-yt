@@ -1,5 +1,6 @@
-package io.github.xuenqui.customer.resources.repositories
+package io.github.xuenqui.customer.infrastructure.repository.h2
 
+import io.github.xuenqui.customer.domain.Customer
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -25,3 +26,14 @@ class CustomerEntity(
     var createdAt: LocalDateTime? = null,
     var updatedAt: LocalDateTime? = null
 )
+
+fun CustomerEntity.toDomain(): Customer =
+    Customer(
+        id = this.id,
+        name = this.name!!,
+        documentNumber = this.documentNumber!!,
+        cellphone = this.cellphone!!,
+        email = this.email!!,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt
+    )

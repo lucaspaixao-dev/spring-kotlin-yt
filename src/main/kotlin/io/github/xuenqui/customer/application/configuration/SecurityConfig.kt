@@ -1,4 +1,4 @@
-package io.github.xuenqui.customer.application.config
+package io.github.xuenqui.customer.application.configuration
 
 import io.github.xuenqui.customer.application.security.JwtAuthConverter
 import org.springframework.context.annotation.Bean

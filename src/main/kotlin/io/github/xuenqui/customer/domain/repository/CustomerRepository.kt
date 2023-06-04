@@ -1,4 +1,4 @@
-package io.github.xuenqui.customer.domain.repositories
+package io.github.xuenqui.customer.domain.repository
 
 import io.github.xuenqui.customer.domain.Customer
 

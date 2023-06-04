@@ -1,18 +1,15 @@
-package io.github.xuenqui.customer.resources.repositories
+package io.github.xuenqui.customer.infrastructure.repository.h2
 
-import io.github.xuenqui.customer.application.exceptions.DatabaseException
 import io.github.xuenqui.customer.domain.Customer
-import io.github.xuenqui.customer.domain.repositories.CustomerRepository
-import java.time.LocalDateTime
-import java.util.Optional
-import java.util.UUID
-import org.springframework.data.repository.CrudRepository
+import io.github.xuenqui.customer.domain.DatabaseException
+import io.github.xuenqui.customer.domain.repository.CustomerRepository
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
+import java.util.*
 
 @Component
-class CustomerSql(
-    private val repository: CustomerRepositoryJpa
+class H2CustomerRepository(
+    private val repository: SpringDataCustomerRepository
 ) : CustomerRepository {
 
     override fun save(customer: Customer): Customer =
@@ -52,19 +49,3 @@ class CustomerSql(
     }
 }
 
-fun CustomerEntity.toDomain(): Customer =
-    Customer(
-        id = this.id,
-        name = this.name!!,
-        documentNumber = this.documentNumber!!,
-        cellphone = this.cellphone!!,
-        email = this.email!!,
-        createdAt = this.createdAt,
-        updatedAt = this.updatedAt
-    )
-
-@Repository
-interface CustomerRepositoryJpa : CrudRepository<CustomerEntity, String> {
-
-    fun findByDocumentNumber(documentNumber: String): Optional<CustomerEntity>
-}

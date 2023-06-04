@@ -1,9 +1,9 @@
-package io.github.xuenqui.customer.resources.sqs
+package io.github.xuenqui.customer.infrastructure.message.sqs
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.github.xuenqui.customer.application.config.AWSProperties
 import io.github.xuenqui.customer.domain.Customer
-import io.github.xuenqui.customer.domain.producers.CustomerProducer
+import io.github.xuenqui.customer.domain.message.CustomerMessage
+import io.github.xuenqui.customer.infrastructure.configuration.AWSProperties
 import org.springframework.stereotype.Component
 import software.amazon.awssdk.services.sqs.SqsClient
 import software.amazon.awssdk.services.sqs.model.MessageAttributeValue
@@ -11,11 +11,11 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 import java.util.*
 
 @Component
-class CustomerSQSProducer(
+class SQSCustomerMessage(
     private val sqsClient: SqsClient,
     private val objectMapper: ObjectMapper,
     private val awsProperties: AWSProperties
-): CustomerProducer {
+) : CustomerMessage {
 
     override fun produce(customer: Customer) {
         val messageId = MessageAttributeValue.builder()

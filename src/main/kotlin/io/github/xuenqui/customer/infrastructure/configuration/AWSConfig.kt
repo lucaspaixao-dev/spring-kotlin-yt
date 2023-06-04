@@ -1,4 +1,4 @@
-package io.github.xuenqui.customer.application.config
+package io.github.xuenqui.customer.infrastructure.configuration
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
